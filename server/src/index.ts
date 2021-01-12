@@ -1,10 +1,11 @@
 import express from 'express';
+import { questions } from './questions';
 
 const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {
-  res.send('Hello there!');
+  res.send(questions);
 });
 
 app.listen(port);
