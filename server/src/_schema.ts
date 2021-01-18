@@ -51,9 +51,19 @@ const query = new GraphQLObjectType({
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    hello: {
-      type: GraphQLString,
-      resolve: () => 'Hello from the Mutation',
+    deleteQuestion: {
+      type: GraphQLNonNull(Question),
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+      },
+      resolve: (_root, { id }) => {
+        for (let i = 0; i < questions.length; i++) {
+          if (questions[i].id === id) {
+            return questions.splice(i, 1)[0];
+          }
+        }
+        throw new Error('Failed to delete question');
+      },
     },
   },
 });
